@@ -23,6 +23,12 @@ limitations under the License.
 #include "tensorflow/core/lib/core/errors.h"
 
 namespace tensorflow {
+//if this node is enter, the node's frame is itself and the node's parent frame is other enter node or the source node ; 
+//and the node's frame_name is in the attribute of the node itself
+//if this node is exit, the node's frame must be an enter node; and the node's parent_frame is it's frame_node(namely enter)'s parent
+//and the node's frame_name is the enter node's attributes
+//if this node is an normal node (neither enter nor exit), then the frame_node of the node is an enter or the source node of the graph;
+//and the parent frame node is an enter or the source node of the graph, and the frame name is the enter node's  atrribute or null(source node)
 
 Status BuildControlFlowInfo(Graph* g, std::vector<ControlFlowInfo>* info) {
   info->clear();
